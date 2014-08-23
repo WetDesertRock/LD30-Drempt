@@ -2,6 +2,8 @@ local Vector = require("base.vector")
 local Key = require("base.keybinds")
 
 local Actor = require("actor")
+local Projectile = require("projectile")
+local DreamBullet = require("dreambullet")
 
 local Player = Actor:extend()
 
@@ -10,10 +12,12 @@ function Player:new(x,y)
     self.group = "Player"
     self.x,self.y = x,y
     self.mag = 0
-    self:setImage("player.png",50)
-    self.speed = 100
+    self:setImage("player.png",40)
+    self.speed = 120
     self.shotrate = 0.5
     self.hp = 100
+    self.turnrate = 6
+    self.projsize = 25
 end
 
 function Player:update(dt)
@@ -23,8 +27,11 @@ function Player:update(dt)
     self.goal = Vector.fromComp(mx-self:middleX(),my-self:middleY()):normalize()
     -- self.velocity = mvec*self.speed
 
-    if Key.isDown("shoot") then
-        self:tryShoot()
+    if Key.isDown("shootA") then
+        self:tryShoot(Projectile)
+    end
+    if Key.isDown("shootB") then
+        self:tryShoot(DreamBullet)
     end
 end
 

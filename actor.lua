@@ -17,6 +17,7 @@ function Actor:new()
     self.canshoot = true
     self.projspeed = 200
     self.projdmg = 20
+    self.projsize = 15
     self.goal = Vector(0,0)
     self.turnrate = 5
 end
@@ -29,19 +30,20 @@ function Actor:update(dt)
     self:clamp(G.bounds)
 end
 
-function Actor:tryShoot()
+function Actor:tryShoot(cls)
     if self.canshoot then
         self.canshoot = false
         self.threads:add(function()
             coil.wait(self.shotrate)
             self.canshoot = true
         end)
-        self:shoot()
+        self:shoot(cls)
     end
 end
 
-function Actor:shoot()
-    local p = Projectile(10,self.projdmg)
+function Actor:shoot(cls)
+    cls = cls or Projectile
+    local p = cls(self.projsize,10,self.projdmg)
     p.velocity = self.velocity:clone():normalize()*self.projspeed
     p.owner = self
     p.group = self.group
@@ -54,11 +56,11 @@ end
 function Actor:onHit(p)
     self.hp = self.hp - p.dmg
     if self.hp <= 0 then
-        self:kill()
+        self:kill(p)
     end
 end
 
-function Actor:onKill()
+function Actor:onKill(...)
     self:fragment(8,50)
 end
 

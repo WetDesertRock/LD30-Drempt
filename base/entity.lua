@@ -171,7 +171,7 @@ end
 function Entity:onHit(e)
 end
 
-function Entity:onKill()
+function Entity:onKill(...)
 end
 
 function Entity:__tostring()

@@ -1,9 +1,9 @@
 local Entity = require("base.entity")
 
 local Projectile = Entity:extend()
-function Projectile:new(lifespan,dmg)
+function Projectile:new(size,lifespan,dmg)
     Projectile.super.new(self)
-    self:setImage("bullet.png",25)
+    self:setImage("bullet.png",size)
     self.dmg = dmg
     self:setLifespan(lifespan)
 end

@@ -5,6 +5,7 @@ local Vector = require("base.vector")
 
 local Actor = require("actor")
 local Projectile = require("projectile")
+local DreamBullet = require("dreambullet")
 local TextEntity = require("textentity")
 
 local Enemy = Actor:extend()
@@ -17,10 +18,9 @@ function Enemy:new(x,y)
     self:setImage("enemy1.png",50)
     self.speed = 60
     self.playerdist = 100
-    self.shootrate = 4
-    self.shotrate = 2
-    self.turnrate = 10
-    self.pointval = -10
+    self.shootrate = 6
+    self.shotrate = 3
+    self.pointval = 0
 
     self.threads:add(function()
         repeat
@@ -73,17 +73,22 @@ function Enemy:seekPlayer()
     end
 end
 
-function Enemy:onKill()
-    Enemy.super.onKill(self)
-    G.points = G.points+self.pointval
+function Enemy:onKill(p)
+    Enemy.super.onKill(self,p)
+    local ptval = self.pointval
+    if p:is(DreamBullet) then
+        ptval = -1*self.pointval
+        print(ptval,self.pointval)
+    end
+    G.points = G.points+ptval
 
     local p = "+"
     local color = {102, 175, 83}
-    if self.pointval < 0 then
+    if ptval < 0 then
         p = ""
         color = {207, 96, 96}
     end
-    local pt = TextEntity(p..self.pointval)
+    local pt = TextEntity(p..ptval)
     pt:setColor(color)
     pt:setFont("BPreplayBold.otf",16)
     pt.velocity.dir = -math.pi/2
