@@ -1,6 +1,7 @@
 function love.load()
-    love.graphics.setBackgroundColor(190, 187, 177)
+    love.graphics.setBackgroundColor(151, 149, 141)
     G = require('game')()
+    isrunning = true
 end
 
 function love.keypressed(key,isrepeat)
@@ -15,7 +16,12 @@ end
 
 
 function love.update(dt)
-    G:update(dt)
+    if isrunning then
+        G:update(dt)
+    end
+    -- if G.debug then
+        require("lib.lovebird").update(dt)
+    -- end
 end
 
 

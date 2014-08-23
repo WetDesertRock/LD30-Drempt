@@ -9,6 +9,7 @@ local Actor = Entity:extend()
 
 function Actor:new()
     Actor.super.new(self)
+    self.group = "Actor"
     self.hp = 10
     self.speed = 0
     self.shotrate = 1
@@ -32,6 +33,7 @@ function Actor:shoot()
     local p = Projectile(10,self.projdmg)
     p.velocity = self.velocity:clone():normalize()*self.projspeed
     p.owner = self
+    p.group = self.group
     p.x,p.y = self:middleX()-p.width/2,self:middleY()-p.height/2
     p.rotation = lume.random(0,math.pi*2)
     p.rotrate = 5

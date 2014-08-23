@@ -1,4 +1,5 @@
 local lume = require("lib.lume")
+local coil = require("lib.coil")
 
 local Vector = require("base.vector")
 
@@ -9,14 +10,23 @@ local Enemy = Actor:extend()
 
 function Enemy:new(x,y)
     Enemy.super.new(self)
+    self.group = "Enemy"
     self.x,self.y = x,y
     self.goal = Vector(0,0)
     self.turnrate = 20
     self.behaviors = {{self.avoidOthers,5},{self.seekPlayer,10}}
-    self:setImage("bullet.png",50)
+    self:setImage("enemy1.png",50)
     self.turnrate = 5
     self.speed = 60
     self.playerdist = 100
+    self.shootrate = 2
+
+    self.threads:add(function()
+        repeat
+            coil.wait(lume.random(self.shotrate,self.shootrate))
+            self:shoot()
+        until nil
+    end)
 end
 
 function Enemy:think()

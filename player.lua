@@ -7,11 +7,13 @@ local Player = Actor:extend()
 
 function Player:new(x,y)
     Player.super.new(self)
+    self.group = "Player"
     self.x,self.y = x,y
     self.mag = 0
     self:setImage("player.png",50)
     self.speed = 70
     self.shotrate = 0.5
+    self.hp = 100
 end
 
 function Player:update(dt)

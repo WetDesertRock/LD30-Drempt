@@ -6,6 +6,7 @@ local Camera = require("base.camera")
 
 local Player = require("player")
 local Enemy = require("enemy")
+local Backgrounds = require("backgrounds")
 
 local Game = Object:extend()
 function Game:new(debug)
@@ -16,9 +17,17 @@ function Game:new(debug)
     self.entities:add(self.player)
 
     self.entities:add(Enemy(-200,-200))
+    self.entities:add(Enemy(-250,-200))
+    self.entities:add(Enemy(-200,-250))
+    self.entities:add(Enemy(-300,-200))
+    self.entities:add(Enemy(-200,-300))
+    self.entities:add(Enemy(-350,-200))
+    self.entities:add(Enemy(-200,-350))
 
     self.camera = Camera()
     self.camera:focus(self.player)
+
+    self.background = Backgrounds.bubbles(1000,1000,25)
 end
 
 function Game:update(dt)
@@ -28,6 +37,7 @@ end
 
 function Game:draw()
     self.camera:attach()
+    self.background:draw()
     self.entities:draw()
     if self.debug then self.entities:drawDebug() end
     self.camera:detach()

@@ -9,7 +9,7 @@ function Projectile:new(lifespan,dmg)
 end
 
 function Projectile:onCollide(e)
-    if self.owner ~= e then
+    if self.group ~= e.group then
         e:onHit(self)
         self:fragment(2)
         self:kill()
