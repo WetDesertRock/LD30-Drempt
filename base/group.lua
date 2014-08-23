@@ -58,6 +58,12 @@ function Group:updateCollision(dt)
     end
 end
 
+-- collidePoint collides with everything, not just collidables
+function Group:collidePoint(x,y)
+    for _,v in pairs(self.members) do
+        if v:overlapsPoint(x,y) then return v end
+    end
+end
 
 function Group:update(dt)
     Group.super.update(self, dt)

@@ -78,7 +78,6 @@ function Enemy:onKill(p)
     local ptval = self.pointval
     if p:is(DreamBullet) then
         ptval = -1*self.pointval
-        print(ptval,self.pointval)
     end
     G.points = G.points+ptval
 

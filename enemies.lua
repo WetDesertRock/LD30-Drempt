@@ -6,7 +6,7 @@ function DreamEnemy:new(x,y)
     self.turnrate = 2
     self.speed = 55
     self.pointval = -10
-    self.behaviors = {{self.avoidOthers,3},{self.seekPlayer,5}}
+    self.behaviors = {{self.avoidOthers,4},{self.seekPlayer,5}}
 end
 
 local RealEnemy = Enemy:extend()

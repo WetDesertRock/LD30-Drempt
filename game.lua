@@ -1,6 +1,7 @@
 local Object = require("lib.classic")
 local coil = require("lib.coil")
 local lume = require("lib.lume")
+local statements = require("lib.statements")
 
 local Group = require("base.group")
 local MediaManager = require("base.mediamanager")
@@ -23,7 +24,7 @@ function Game:new(debug)
     self.bounds = Rect(0,0,2000,2000)
     self.background = Backgrounds.bubbles(self.bounds.width,self.bounds.height,25)
 
-    self.player = Player(40,40)
+    self.player = Player(1000,1000)
     self.camera:focus(self.player)
     self.entities:add(self.player)
 
@@ -48,7 +49,6 @@ function Game:spawnEnemy()
     local e = cls(x,y)
     self.camera:reject(e)
     self.entities:add(e)
-    print(e)
 end
 
 function Game:update(dt)
