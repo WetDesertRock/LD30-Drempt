@@ -5,6 +5,7 @@ local Vector = require("base.vector")
 local coil = require("lib.coil")
 local flux = require("lib.flux")
 local lume = require("lib.lume")
+local Media = require("base.mediamanager")
 
 local Entity = Rect:extend()
 
@@ -25,7 +26,7 @@ function Entity:new()
 end
 
 function Entity:setImage(fp,width,height)
-    self.image = G.media:getImage(fp)
+    self.image = Media:getImage(fp)
 
     self.sx,self.sy = 1,1
     if width then

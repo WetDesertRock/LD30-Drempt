@@ -56,4 +56,6 @@ function MediaManager:purge()
     self.sounds = {}
 end
 
-return MediaManager
+local Media = MediaManager()
+
+return Media
