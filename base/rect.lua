@@ -177,8 +177,8 @@ end
 
 
 function Rect:overlapsPoint(x, y)
-  return x > r.x and x < r.x + r.width and
-         y > r.y and y < r.y + r.height
+  return x > self.x and x < self.x + self.width and
+         y > self.y and y < self.y + self.height
 end
 
 

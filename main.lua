@@ -1,6 +1,6 @@
 local statements = require("lib.statements")
 
-DEBUG = false
+DEBUG = true
 
 local GlobalState = statements.new()
 
@@ -14,10 +14,10 @@ function love.load()
     love.graphics.setBackgroundColor(131, 130, 124)
     math.randomseed(os.clock())
 
-    G = require('game')(DEBUG)
+    G = nil
 
     statements.setGlobalState(GlobalState)
-    statements.switchState(G)
+    statements.switchState(require('mainmenu')())
 end
 
 function love.keypressed(key,isrepeat)

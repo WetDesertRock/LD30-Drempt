@@ -60,5 +60,10 @@ function Player:arrowKeyControl()
     end
 end
 
+function Player:onKill(...)
+    Player.super.onKill(self,...)
+    G:die()
+end
+
 
 return Player
