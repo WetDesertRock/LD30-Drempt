@@ -8,11 +8,13 @@ local Rect = require("base.rect")
 local Player = require("player")
 local Enemy = require("enemy")
 local Backgrounds = require("backgrounds")
+local Gui = require("gui")
 
 local Game = Object:extend()
 function Game:new(debug)
     self.debug = debug
     self.entities = Group()
+    self.gui = Gui()
 
     self.player = Player(40,40)
     self.entities:add(self.player)
@@ -30,11 +32,14 @@ function Game:new(debug)
 
     self.bounds = Rect(0,0,2000,2000)
     self.background = Backgrounds.bubbles(self.bounds.width,self.bounds.height,25)
+
+    self.points = 0
 end
 
 function Game:update(dt)
     self.entities:update(dt)
     self.camera:update(dt)
+    self.gui:update(dt)
 end
 
 function Game:draw()
@@ -43,6 +48,7 @@ function Game:draw()
     self.entities:draw()
     if self.debug then self.entities:drawDebug() end
     self.camera:detach()
+    self.gui:draw()
 end
 
 

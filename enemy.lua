@@ -5,6 +5,7 @@ local Vector = require("base.vector")
 
 local Actor = require("actor")
 local Projectile = require("projectile")
+local TextEntity = require("textentity")
 
 local Enemy = Actor:extend()
 
@@ -18,6 +19,8 @@ function Enemy:new(x,y)
     self.playerdist = 100
     self.shootrate = 4
     self.shotrate = 2
+    self.turnrate = 10
+    self.pointval = -10
 
     self.threads:add(function()
         repeat
@@ -68,6 +71,26 @@ function Enemy:seekPlayer()
     else
         return Vector.fromComp(player.x-self.x,player.y-self.y):normalize()
     end
+end
+
+function Enemy:onKill()
+    Enemy.super.onKill(self)
+    G.points = G.points+self.pointval
+
+    local p = "+"
+    local color = {102, 175, 83}
+    if self.pointval < 0 then
+        p = ""
+        color = {207, 96, 96}
+    end
+    local pt = TextEntity(p..self.pointval)
+    pt:setColor(color)
+    pt:setFont("BPreplayBold.otf",16)
+    pt.velocity.dir = -math.pi/2
+    pt.velocity.mag = 40
+    pt.x,pt.y = self:middleX(),self:middleY()
+    pt:setLifespan(1)
+    self.parent:add(pt)
 end
 
 return Enemy
