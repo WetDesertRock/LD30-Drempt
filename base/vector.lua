@@ -1,129 +1,86 @@
--- Not stolen from rxi: Original: https://gist.github.com/BlackBulletIV/1055480
 local Object = require("lib.classic")
+local lume = require("lib.lume")
 local Vector = Object:extend()
 
-function Vector.__add(a, b)
-    if type(a) == "number" then
-        return Vector(b.x + a, b.y + a)
-    elseif type(b) == "number" then
-        return Vector(a.x + b, a.y + b)
+function Vector:new(dir,mag)
+    if type(dir) == "table" then
+        return Vector.fromComp(dir.x,dir.y)
+    end
+    self.dir = dir
+    self.mag = mag
+end
+
+function Vector.fromComp(x,y)
+    return Vector(math.atan2(y,x),lume.distance(0,0,x,y))
+end
+
+function Vector:x()
+    return math.cos(self.dir)*self.mag
+end
+function Vector:y()
+    return math.sin(self.dir)*self.mag
+end
+
+function Vector:__add(b)
+    if type(b) == "number" then
+        return Vector.fromComp(self:x()+b,self:y()+b)
     else
-        return Vector(a.x + b.x, a.y + b.y)
+        return Vector.fromComp(self:x() + b:x(), self:y() + b:y())
+    end
+end
+function Vector:__sub(b)
+    if type(b) == "number" then
+        return Vector.fromComp(self:x()-b,self:y()-b)
+    else
+        return Vector.fromComp(self:x()-b:x(), self:y()-b:y())
+    end
+end
+function Vector:__mul(b)
+    if type(b) == "number" then
+        return Vector.fromComp(self:x()*b,self:y()*b)
+    else
+        return Vector.fromComp(self:x()*b:x(), self:y()*b:y())
+    end
+end
+function Vector:__div(b)
+    if type(b) == "number" then
+        return Vector.fromComp(self:x()/b,self:y()/b)
+    else
+        return Vector.fromComp(self:x()/b:x(), self:y()/b:y())
     end
 end
 
-function Vector.__sub(a, b)
-    if type(a) == "number" then
-        return Vector(b.x - a, b.y - a)
-    elseif type(b) == "number" then
-        return Vector(a.x - b, a.y - b)
-    else
-        return Vector(a.x - b.x, a.y - b.y)
-    end
+function Vector:__eq(b)
+    return self.dir == b.dir and self.mag == b.mag
 end
 
-function Vector.__mul(a, b)
-    if type(a) == "number" then
-        return Vector(b.x * a, b.y * a)
-    elseif type(b) == "number" then
-        return Vector(a.x * b, a.y * b)
-    else
-        return Vector(a.x * b.x, a.y * b.y)
-    end
-end
-
-function Vector.__div(a, b)
-    if type(a) == "number" then
-        return Vector(b.x / a, b.y / a)
-    elseif type(b) == "number" then
-        return Vector(a.x / b, a.y / b)
-    else
-        return Vector(a.x / b.x, a.y / b.y)
-    end
-end
-
-function Vector.__eq(a, b)
-    return a.x == b.x and a.y == b.y
-end
-
-function Vector.__lt(a, b)
-    return a.x < b.x or (a.x == b.x and a.y < b.y)
-end
-
-function Vector.__le(a, b)
-    return a.x <= b.x and a.y <= b.y
-end
-
-function Vector.__tostring(a)
-    return "(" .. a.x .. ", " .. a.y .. ")"
-end
-
-function Vector:new(x, y)
-    self.x = x or 0
-    self.y = y or 0
-end
-
-function Vector.distance(a, b)
-    return (b - a):len()
+function Vector:__tostring()
+    return "Vector("..self.dir..","..self.mag..")"
 end
 
 function Vector:clone()
-    return Vector(self.x, self.y)
+    return Vector(self.dir,self.mag)
 end
 
-function Vector:unpack()
-    return self.x, self.y
-end
-
-function Vector:len()
-    return math.sqrt(self.x * self.x + self.y * self.y)
-end
-
-function Vector:lenSq()
-    return self.x * self.x + self.y * self.y
+function Vector:distance(b)
+    return (b-self).mag
 end
 
 function Vector:normalize()
-    local len = self:len()
-    self.x = self.x / len
-    self.y = self.y / len
+    self.mag = 1
     return self
 end
-
-function Vector:normalized()
-    return self / self:len()
-end
-
 function Vector:rotate(phi)
-    local c = math.cos(phi)
-    local s = math.sin(phi)
-    self.x = c * self.x - s * self.y
-    self.y = s * self.x + c * self.y
+    self.dir = phi
     return self
-end
-
-function Vector:rotated(phi)
-    return self:clone():rotate(phi)
 end
 
 function Vector:perpendicular()
-    return Vector(-self.y, self.x)
-end
-
-function Vector:projectOn(other)
-    return (self * other) * other / other:lenSq()
+    return Vector.fromComp(-self:y(), self:x())
 end
 
 function Vector:cross(other)
-    return self.x * other.y - self.y * other.x
-end
-
-function Vector:heading()
-    return math.atan2(self.y,self.x)
-end
-
-function Vector:angleTo(other)
-	return math.atan2(self.y, self.x) - math.atan2(other.y, other.x)
+    return self:x() * other:y() - self:y() * other:x()
 end
 
 return Vector

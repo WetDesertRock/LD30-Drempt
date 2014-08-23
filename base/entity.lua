@@ -58,8 +58,8 @@ function Entity:setLifespan(lifespan,fade)
 end
 
 function Entity:update(td)
-    local vec = Vector(self.x,self.y) + self.velocity*td
-    self.x,self.y = vec.x,vec.y
+    local vec = Vector.fromComp(self.x,self.y) + self.velocity*td
+    self.x,self.y = vec:x(),vec:y()
 
     if self.rotation then
         self.rotation = self.rotation + td*self.rotrate
@@ -76,7 +76,7 @@ function Entity:draw()
 
         local rot = self.rotation
         if not self.rotation then
-            rot = self.velocity:heading()--+math.pi/2
+            rot = self.velocity.dir--+math.pi/2
         end
 
         if self.quad then
@@ -95,7 +95,7 @@ function Entity:drawDebug()
     love.graphics.rectangle("line",self.x,self.y,self.width,self.height)
 
     love.graphics.setColor(100,100,255)
-    love.graphics.line(self.x,self.y,self.velocity.x+self.x,self.velocity.y+self.y)
+    love.graphics.line(self.x,self.y,self.velocity:x()+self.x,self.velocity:y()+self.y)
 end
 
 function Entity:fragment(iterations,skipchance)
@@ -147,7 +147,7 @@ function Entity:fragment(iterations,skipchance)
         ent.image = self.image
         ent:setQuad(quad)
         ent.collidable = false
-        local v = Vector(ent:middleX(),ent:middleY()) - centerV
+        local v = Vector.fromComp(ent:middleX(),ent:middleY()) - centerV
         v:normalize()
         v = v * lume.random(50,70)--60
         ent.velocity = v+self.velocity
