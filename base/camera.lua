@@ -19,6 +19,7 @@ function Camera:update(td)
     if self.focus then
         self:at(self.focus)
     end
+    self:clamp(G.bounds)
 end
 
 function Camera:attach()
@@ -28,6 +29,17 @@ end
 
 function Camera:detach()
     love.graphics.pop()
+end
+
+function Camera:getMouseX()
+    return love.mouse.getX()+self.x
+end
+function Camera:getMouseY()
+    return love.mouse.getY()+self.y
+end
+
+function Camera:getMousePosition()
+    return self:getMouseX(),self:getMouseY()
 end
 
 return Camera

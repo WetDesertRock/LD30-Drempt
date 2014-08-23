@@ -2,6 +2,7 @@ function love.load()
     love.graphics.setBackgroundColor(151, 149, 141)
     G = require('game')()
     isrunning = true
+    math.randomseed(os.clock())
 end
 
 function love.keypressed(key,isrepeat)

@@ -11,13 +11,24 @@ function Player:new(x,y)
     self.x,self.y = x,y
     self.mag = 0
     self:setImage("player.png",50)
-    self.speed = 70
+    self.speed = 100
     self.shotrate = 0.5
     self.hp = 100
 end
 
 function Player:update(dt)
     Player.super.update(self,dt)
+
+    mx,my = G.camera:getMousePosition()
+    self.goal = Vector.fromComp(mx-self:middleX(),my-self:middleY()):normalize()
+    -- self.velocity = mvec*self.speed
+
+    if Key.isDown("shoot") then
+        self:tryShoot()
+    end
+end
+
+function Player:arrowKeyControl()
     local mx,my = 0,0
 
     if Key.isDown("up") then
@@ -39,10 +50,6 @@ function Player:update(dt)
     end
     if mx == 0 and my == 0 then
         self.velocity.mag = 0
-    end
-
-    if Key.isDown("shoot") then
-        self:tryShoot()
     end
 end
 

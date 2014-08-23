@@ -12,14 +12,12 @@ function Enemy:new(x,y)
     Enemy.super.new(self)
     self.group = "Enemy"
     self.x,self.y = x,y
-    self.goal = Vector(0,0)
-    self.turnrate = 20
     self.behaviors = {{self.avoidOthers,5},{self.seekPlayer,10}}
     self:setImage("enemy1.png",50)
-    self.turnrate = 5
     self.speed = 60
     self.playerdist = 100
-    self.shootrate = 2
+    self.shootrate = 4
+    self.shotrate = 2
 
     self.threads:add(function()
         repeat
@@ -40,13 +38,6 @@ end
 
 function Enemy:update(dt)
     self:think()
-
-    cvel = self.velocity:clone():normalize()
-
-    self.velocity = cvel + (self.goal-cvel) * self.turnrate * dt
-    -- self.velocity = self.goal
-    self.velocity = self.velocity:normalize()*self.speed
-
     Enemy.super.update(self,dt)
 end
 

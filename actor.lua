@@ -1,4 +1,5 @@
 local Entity = require("base.entity")
+local Vector = require("base.vector")
 
 local coil = require("lib.coil")
 local lume = require("lib.lume")
@@ -16,6 +17,16 @@ function Actor:new()
     self.canshoot = true
     self.projspeed = 200
     self.projdmg = 20
+    self.goal = Vector(0,0)
+    self.turnrate = 5
+end
+
+function Actor:update(dt)
+    cvel = self.velocity:clone():normalize()
+    self.velocity = cvel + (self.goal-cvel) * self.turnrate * dt
+    self.velocity = self.velocity:normalize()*self.speed
+    Actor.super.update(self,dt)
+    self:clamp(G.bounds)
 end
 
 function Actor:tryShoot()
@@ -48,7 +59,7 @@ function Actor:onHit(p)
 end
 
 function Actor:onKill()
-    self:fragment(6,50)
+    self:fragment(8,50)
 end
 
 return Actor
