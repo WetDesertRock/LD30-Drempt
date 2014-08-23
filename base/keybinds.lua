@@ -2,7 +2,8 @@ local keybinds = {
     up = {"up","w"},
     left = {"left","a"},
     right = {"right","d"},
-    down = {"down","s"}
+    down = {"down","s"},
+    shoot = {" "}
 }
 
 local _ = {}

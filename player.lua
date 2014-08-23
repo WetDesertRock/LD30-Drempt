@@ -11,13 +11,11 @@ function Player:new(x,y)
     self.mag = 0
     self:setImage("player.png",50)
     self.speed = 70
+    self.shotrate = 0.5
 end
 
 function Player:update(dt)
     Player.super.update(self,dt)
-
-    -- self.rotation = Vector.fromComp(love.mouse.getX()-self:middleX(),love.mouse.getY()-self:middleY()).dir
-
     local mx,my = 0,0
 
     if Key.isDown("up") then
@@ -41,9 +39,9 @@ function Player:update(dt)
         self.velocity.mag = 0
     end
 
-    -- self.velocity:r otate(mvec.dir)
-
-    -- print(math.deg(mvec:heading()),self.velocity:heading())
+    if Key.isDown("shoot") then
+        self:tryShoot()
+    end
 end
 
 
