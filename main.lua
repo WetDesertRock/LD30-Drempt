@@ -1,5 +1,6 @@
 function love.load()
     love.graphics.setBackgroundColor(190, 187, 177)
+    G = require('game')()
 end
 
 function love.keypressed(key,isrepeat)
@@ -14,10 +15,10 @@ end
 
 
 function love.update(dt)
+    G:update(dt)
 end
 
 
 function love.draw()
-    love.graphics.setColor(0,0,0)
-    love.graphics.printf("Welcome LD30",0,(love.graphics.getHeight()/2)-5,love.graphics.getWidth(),"center")
+    G:draw()
 end
