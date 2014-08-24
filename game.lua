@@ -49,6 +49,10 @@ function Game:new(debug)
     self.wave = stats.wave
     self.points = stats.points
     self.dreamalpha = WaveAlphas[self.wave]
+    self.dreamkills = 0
+    self.dreamcaptures = 0
+    self.realkills = 0
+    self.realcaptures = 0
 
     self.fadeamt = 0
 
@@ -63,6 +67,8 @@ function Game:new(debug)
         helptext:setLifespan(8,true)
         self.gui:add(helptext)
     end
+
+    self.timer = 0
 
 
     self.tweens = flux.group()
@@ -86,6 +92,7 @@ function Game:spawnEnemy()
 end
 
 function Game:update(dt)
+    self.timer = self.timer+dt
     self.threads:update(dt)
     self.tweens:update(dt)
     self.entities:update(dt)
@@ -115,6 +122,15 @@ function Game:die()
             end
         end)
     stats.points = math.max(self.points,0)
+
+    local report = {
+        leveltime = self.timer,
+        dreamkills = self.dreamkills,
+        dreamcaptures = self.dreamcaptures,
+        realkills = self.realkills,
+        realcaptures = self.realcaptures
+    }
+    require("statreporter").report("levelend",report,true)
 end
 
 return Game

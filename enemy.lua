@@ -100,6 +100,18 @@ function Enemy:onKill(p)
     end
     G.points = G.points+ptval
 
+    if self.pointval < 0 then
+        G.dreamkills = G.dreamkills + 1
+        if p:is(DreamBullet) then
+            G.dreamcaptures = G.dreamcaptures + 1
+        end
+    else
+        G.realkills = G.realkills +1
+        if not p:is(DreamBullet) then
+            G.realcaptures = G.realcaptures + 1
+        end
+    end
+
     local p = "+"
     local color = {102, 175, 83}
     if ptval < 0 then
