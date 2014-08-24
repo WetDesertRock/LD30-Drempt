@@ -1,6 +1,6 @@
 local stats = {
     wave = 0,
-    points = 20,
+    points = 2030,
 
     movespeed = 0,
     n_movespeed = "Move Speed",

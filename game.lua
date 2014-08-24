@@ -14,8 +14,18 @@ local Enemy = require("enemy")
 local Background = require("background")
 local Gui = require("gui")
 local stats = require("playerstats")
+local TextEntity = require("textentity")
 
 local Game = Object:extend()
+local WaveTexts = {
+    "This is the first wave of 5. Shoot a dream bullet at enemies with a white aura surrounding them.",
+    "The auras are starting to fade, you should start learning the differences between the different enemies.",
+    "",
+    "",
+    "This is the last wave, make it count!"
+}
+local WaveAlphas = {70,50,40,20,0}
+local SpawnRates = {1.5,1.2,0.9,0.8,0.8}
 function Game:new(debug)
     self.debug = debug
     self.entities = Group()
@@ -35,18 +45,31 @@ function Game:new(debug)
     self.camera:focus(self.player)
     self.entities:add(self.player)
 
-    self:spawnEnemy()
-
+    stats.wave = stats.wave + 1
     self.wave = stats.wave
     self.points = stats.points
+    self.dreamalpha = WaveAlphas[self.wave]
 
     self.fadeamt = 0
+
+    if WaveTexts[self.wave] ~= "" then
+        local helptext = TextEntity(WaveTexts[self.wave])
+        helptext:setFont("BPreplayBold.otf",20)
+        helptext:setColor({50,50,50})
+        helptext.width = love.graphics.getWidth()*0.75
+        helptext:middleX(Rect.fromScreen():middleX())
+        helptext:middleY(Rect.fromScreen():middleY())
+        helptext.printf = true
+        helptext:setLifespan(8,true)
+        self.gui:add(helptext)
+    end
+
 
     self.tweens = flux.group()
     self.threads = coil.group()
     self.threads:add(function()
             repeat
-                coil.wait(1.5)
+                coil.wait(SpawnRates[self.wave])
                 self:spawnEnemy()
             until nil
         end
@@ -85,7 +108,11 @@ end
 
 function Game:die()
     self.tweens:to(self,4,{fadeamt=255}):ease("quadin"):oncomplete(function()
-            statements.switchState(require("shopmenu")())
+            if self.wave == 5 then
+                statements.switchState(require("mainmenu")())
+            else
+                statements.switchState(require("shopmenu")())
+            end
         end)
     stats.points = math.max(self.points,0)
 end

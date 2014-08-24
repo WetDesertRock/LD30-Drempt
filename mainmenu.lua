@@ -10,6 +10,7 @@ local Rect = require("base.rect")
 local Background = require("background")
 local TextEntity = require("textentity")
 local Game = require("game")
+local stats = require("playerstats")
 
 local MainMenu = Object:extend()
 function MainMenu:new(debug)
@@ -18,6 +19,9 @@ function MainMenu:new(debug)
     self:createGui()
     self.fadeamt = 0
     self.tweens = flux.group()
+    for _,key in pairs({"hp","movespeed","turnrate","shotrate","points"}) do
+        stats[key] = 0
+    end
 end
 
 function MainMenu:createGui()

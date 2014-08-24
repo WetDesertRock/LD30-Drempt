@@ -14,6 +14,7 @@ function TextEntity:new(prefix,target,key)
     self.offx,self.offy = 0,0
     self.nohover = true
     self.collidable = false
+    self.printf = false
 end
 function TextEntity:setFont(fp,s)
     self.font = Media:getFont(fp,s)
@@ -36,11 +37,17 @@ function TextEntity:draw()
     if self.font then
         love.graphics.setFont(self.font)
     end
+    local t = self.text
     if self.prefix then
-        love.graphics.print(self.prefix..self.target[self.key],self.x+self.offx,self.y+self.offy)
-    else
-        love.graphics.print(self.text,self.x+self.offx,self.y+self.offy)
+        t = self.prefix..self.target[self.key]
     end
+
+    if self.printf then
+        love.graphics.printf(t,self.x+self.offx,self.y+self.offy,self.width,"center")
+    else
+        love.graphics.print(t,self.x+self.offx,self.y+self.offy)
+    end
+
     self.offx,self.offy = 0,0
 end
 return TextEntity

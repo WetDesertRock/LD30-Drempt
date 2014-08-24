@@ -28,7 +28,7 @@ function Enemy:new(x,y)
     self.cloudent.rotation = lume.random(0,math.pi*2)
     self.cloudent.rotrate = lume.random(0,1)
     self.cloudent:at(self)
-    self.cloudent.color = {255,255,255,40}
+    self.cloudent.color = {255,255,255,G.dreamalpha}
 
     self.snd_onkill = "enemydie.ogg"
 
