@@ -65,8 +65,13 @@ function love.load()
     resw,resh = love.window.getDesktopDimensions( display )
     local report = {
         res = {resw,resh},
-        os = love.system.getOS( )
+        os = love.system.getOS( ),
+        fused = love.filesystem.isFused(),
+        support = {}
     }
+    for _,k in ipairs({"canvas","npot","subtractive","shader","hdrcanvas","multicanvas","mipmap","dxt","bc5","srgb"}) do
+        report.support[k] = love.graphics.isSupported(k)
+    end
     statreporter.report("initial",report,false)
 
     GlobalState:init()
