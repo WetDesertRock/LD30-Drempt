@@ -13,6 +13,7 @@ function TextEntity:new(prefix,target,key)
     end
     self.offx,self.offy = 0,0
     self.nohover = true
+    self.collidable = false
 end
 function TextEntity:setFont(fp,s)
     self.font = Media:getFont(fp,s)

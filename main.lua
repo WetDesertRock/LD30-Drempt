@@ -10,7 +10,7 @@ function GlobalState:init()
     self.music = Media:playSound("music.ogg")
     self.music:setVolume(0)
     self.music:setLooping(true)
-    -- self.music:pause()
+    self.music:pause()
     self.musicvol = 0
     flux.to(self,4,{musicvol=1})
 end

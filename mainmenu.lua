@@ -1,8 +1,10 @@
 local Object = require("lib.classic")
 local statements = require("lib.statements")
 local flux = require("lib.flux")
+local lume = require("lib.lume")
 
 local Group = require("base.group")
+local Entity = require("base.entity")
 
 local Background = require("background")
 local TextEntity = require("textentity")
@@ -22,13 +24,32 @@ function MainMenu:createGui()
     title:setFont("BPreplayBold.otf",80)
     title:setColor({50,50,50})
     title.x,title.y = 250,50
-    self.gui:add(title)
 
+    local a1 = Entity()
+    a1:setImage("aura.png",150)
+    a1.rotation = lume.random(0,math.pi*2)
+    a1.rotrate = -0.2
+    a1:middleX(title:middleX())
+    a1:middleY(title:middleY())
+
+    local a2 = Entity()
+    a2:setImage("aura.png",150)
+    a2.rotation = lume.random(0,math.pi*2)
+    a2.rotrate = 0.1
+    a2:middleX(title:middleX()-90)
+    a2:middleY(title:middleY()+20)
+
+    local a3 = Entity()
+    a3:setImage("aura.png",150)
+    a3.rotation = lume.random(0,math.pi*2)
+    a3.rotrate = 0.1
+    a3:middleX(title:middleX()+90)
+    a3:middleY(title:middleY()+20)
 
     local play = TextEntity("Play")
     play:setFont("BPreplayBold.otf",40)
     play:setColor({0,0,0})
-    play.x,play.y = 100,100
+    play.x,play.y = title.x,title:bottom()+100
     play.onClick = function()
         self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
                 G = Game()
@@ -36,18 +57,23 @@ function MainMenu:createGui()
             end)
     end
     play.nohover = false
-    self.gui:add(play)
 
 
     local quit = TextEntity("Quit")
     quit:setFont("BPreplayBold.otf",40)
     quit:setColor({0,0,0})
-    quit.x,quit.y = play:right(),play:bottom()
+    quit:right(title:right())
+    quit.y = play.y
     quit.onClick = function()
         love.event.quit()
     end
     quit.nohover = false
     self.gui:add(quit)
+    self.gui:add(play)
+    self.gui:add(a1)
+    self.gui:add(a2)
+    self.gui:add(a3)
+    self.gui:add(title)
 end
 
 function MainMenu:mousepressed(x,y,button)
@@ -60,7 +86,7 @@ end
 function MainMenu:update(dt)
     self.tweens:update(dt)
     local elem = self.gui:collidePoint(love.mouse.getPosition())
-    if elem then
+    if elem and elem.hover then
         elem:hover()
     end
     self.gui:update(dt)

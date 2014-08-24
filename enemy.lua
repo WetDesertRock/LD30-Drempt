@@ -2,6 +2,7 @@ local lume = require("lib.lume")
 local coil = require("lib.coil")
 
 local Vector = require("base.vector")
+local Entity = require("base.entity")
 
 local Actor = require("actor")
 local Projectile = require("projectile")
@@ -21,6 +22,13 @@ function Enemy:new(x,y)
     self.shootrate = 6
     self.shotrate = 3
     self.pointval = 0
+
+    self.cloudent = Entity()
+    self.cloudent:setImage("aura.png",50)
+    self.cloudent.rotation = lume.random(0,math.pi*2)
+    self.cloudent.rotrate = lume.random(0,1)
+    self.cloudent:at(self)
+    self.cloudent.color = {255,255,255,40}
 
     self.snd_onkill = "enemydie.ogg"
 
@@ -44,6 +52,15 @@ end
 function Enemy:update(dt)
     self:think()
     Enemy.super.update(self,dt)
+    self.cloudent:at(self)
+    self.cloudent:update(dt)
+end
+
+function Enemy:draw()
+    if self.pointval < 0 then
+        self.cloudent:draw()
+    end
+    Enemy.super.draw(self)
 end
 
 function Enemy:addBehavior(b,w)

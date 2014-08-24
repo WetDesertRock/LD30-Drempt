@@ -70,7 +70,11 @@ function Entity:update(td)
 end
 
 function Entity:draw()
-    love.graphics.setColor(255,255,255,self.opacity)
+    if self.color then
+        love.graphics.setColor(self.color)
+    elseif self.opacity then
+        love.graphics.setColor(255,255,255,self.opacity)
+    end
     if self.image then
         local x,y = self.x+self.width/2,self.y+self.height/2
 
