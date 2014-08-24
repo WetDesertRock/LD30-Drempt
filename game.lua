@@ -13,6 +13,7 @@ local Player = require("player")
 local Enemy = require("enemy")
 local Background = require("background")
 local Gui = require("gui")
+local stats = require("playerstats")
 
 local Game = Object:extend()
 function Game:new(debug)
@@ -26,12 +27,18 @@ function Game:new(debug)
     self.background = Background(self.bounds.width,self.bounds.height,25)
 
     self.player = Player(1000,1000)
+    self.player.turnrate = self.player.turnrate+(stats.turnrate/2)
+    self.player.speed = self.player.speed+(stats.movespeed*10)
+    self.player.shotrate = self.player.shotrate+(stats.shotrate/4)
+    self.player.hp = self.player.hp+(stats.hp*10)
+
     self.camera:focus(self.player)
     self.entities:add(self.player)
 
     self:spawnEnemy()
 
-    self.points = 0
+    self.wave = stats.wave
+    self.points = stats.points
 
     self.fadeamt = 0
 
@@ -78,8 +85,9 @@ end
 
 function Game:die()
     self.tweens:to(self,4,{fadeamt=255}):ease("quadin"):oncomplete(function()
-            statements.switchState(require("mainmenu")())
+            statements.switchState(require("shopmenu")())
         end)
+    stats.points = math.max(self.points,0)
 end
 
 return Game

@@ -17,7 +17,7 @@ function Actor:new()
     self.shotrate = 1
     self.canshoot = true
     self.projspeed = 200
-    self.projdmg = 20
+    self.projdmg = 10
     self.projsize = 15
     self.goal = Vector(0,0)
     self.turnrate = 5

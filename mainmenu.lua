@@ -5,6 +5,7 @@ local lume = require("lib.lume")
 
 local Group = require("base.group")
 local Entity = require("base.entity")
+local Rect = require("base.rect")
 
 local Background = require("background")
 local TextEntity = require("textentity")
@@ -23,7 +24,8 @@ function MainMenu:createGui()
     local title = TextEntity("Drempt")
     title:setFont("BPreplayBold.otf",80)
     title:setColor({50,50,50})
-    title.x,title.y = 250,50
+    title:middleX(Rect.fromScreen():middleX())
+    title.y = 100
 
     local a1 = Entity()
     a1:setImage("aura.png",150)

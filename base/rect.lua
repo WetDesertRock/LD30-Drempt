@@ -13,6 +13,10 @@ function Rect:new(x, y, width, height)
   self.height = height or 0
 end
 
+function Rect.fromScreen()
+    return Rect(0,0,love.graphics.getWidth(),love.graphics.getHeight())
+end
+
 
 function Rect:set(x, y, width, height)
   self.x = x or self.x
