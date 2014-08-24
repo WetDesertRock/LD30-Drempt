@@ -66,6 +66,7 @@ function love.load()
     local report = {
         res = {resw,resh},
         os = love.system.getOS( ),
+        potatosalad = true,
         fused = love.filesystem.isFused(),
         support = {}
     }
