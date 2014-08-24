@@ -22,6 +22,8 @@ function Enemy:new(x,y)
     self.shotrate = 3
     self.pointval = 0
 
+    self.snd_onkill = "enemydie.ogg"
+
     self.threads:add(function()
         repeat
             coil.wait(lume.random(self.shotrate,self.shootrate))

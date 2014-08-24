@@ -77,7 +77,7 @@ function Game:draw()
 end
 
 function Game:die()
-    self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
+    self.tweens:to(self,4,{fadeamt=255}):ease("quadin"):oncomplete(function()
             statements.switchState(require("mainmenu")())
         end)
 end

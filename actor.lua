@@ -1,5 +1,6 @@
 local Entity = require("base.entity")
 local Vector = require("base.vector")
+local Media = require("base.mediamanager")
 
 local coil = require("lib.coil")
 local lume = require("lib.lume")
@@ -57,7 +58,22 @@ function Actor:onHit(p)
     self.hp = self.hp - p.dmg
     if self.hp <= 0 then
         self:kill(p)
+        if self.snd_onkill then
+            self:playSound(self.snd_onkill)
+        end
+    else
+        if self.snd_onhit then
+            self:playSound(self.snd_onhit)
+        end
     end
+end
+
+function Actor:playSound(s)
+    local snd = Media:playSound(s)
+    snd:setRelative(false)
+    snd:setPosition(self.x, self.y, 0)
+    snd:setVelocity(self.velocity:x(),self.velocity:y(),0)
+    snd:setAttenuationDistances(20,300)
 end
 
 function Actor:onKill(...)

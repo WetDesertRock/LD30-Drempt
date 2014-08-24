@@ -18,6 +18,8 @@ function Player:new(x,y)
     self.hp = 100
     self.turnrate = 6
     self.projsize = 25
+    self.snd_onkill = "playerdie.ogg"
+    self.snd_onhit = "playerhit.ogg"
 end
 
 function Player:update(dt)
@@ -33,6 +35,9 @@ function Player:update(dt)
     if Key.isDown("shootB") then
         self:tryShoot(DreamBullet)
     end
+
+    love.audio.setPosition(self.x,self.y,0)
+    love.audio.setVelocity(self.velocity:x(),self.velocity:y(),0)
 end
 
 function Player:arrowKeyControl()
