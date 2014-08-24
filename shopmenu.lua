@@ -22,23 +22,24 @@ function ShopMenu:new()
 end
 
 function ShopMenu:createGui()
-    local title = TextEntity("Shop")
+    local title = TextEntity("Bolster")
     title:setFont("BPreplayBold.otf",60)
     title:setColor({50,50,50})
-    title.x,title.y = 25,25
+    title:bottom(Rect.fromScreen():bottom()-20)
+    title.x = 50
 
     local points = TextEntity("Remaining points: ",stats,"points")
-    points:setFont("BPreplayBold.otf",40)
+    points:setFont("BPreplayBold.otf",30)
     points:setColor({0,0,0})
-    points.x = title:right()+50
-    points:bottom(title:bottom())
+    points.x = title.x
+    points:bottom(title:top()-60)
 
 
     local play = TextEntity("Next Dream Cycle")
     play:setFont("BPreplayBold.otf",30)
     play:setColor({32, 100, 22})
-    play:right(Rect.fromScreen():right()-25)
-    play:bottom(Rect.fromScreen():bottom()-10)
+    play:right(Rect.fromScreen():right()-title.x)
+    play:bottom(title:bottom()-7)
     play.onClick = function()
         self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
                 statements.switchState(require("game")())
@@ -66,8 +67,8 @@ function ShopMenu:createGui()
             end
         end
         local buyable = TextEntity(fmtname(key))
-        buyable:setFont("BPreplayBold.otf",30)
-        buyable.y = y
+        buyable:setFont("BPreplayBold.otf",20)
+        buyable:bottom(y-30)
         buyable.x = title.x
         buyable.nohover = false
         buyable.onClick = function()
@@ -79,10 +80,10 @@ function ShopMenu:createGui()
         return buyable
     end
 
-    local y = title:bottom()+10
+    local y = points:top()-20
     for k,v in ipairs({"hp","movespeed","turnrate","shotrate"}) do
         local e = makeBuyable(v,y)
-        y = e:bottom()+10
+        y = e:top()
     end
 end
 

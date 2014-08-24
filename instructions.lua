@@ -26,25 +26,30 @@ end
 
 local instructions = [[
     Drempt is a game about when the external world connects with your dream world that takes place throughout five dream cycles.
-    There are two different kinds of manifestations: The Visitors are external manifestations in your dreams, and the Glimmers are manifestations of the dream itself. As the primary observer in your dream, you need to figure out what is a Visitor and what is a Glimmer.
-    Your goal is to discern between these two manifestations by shooting them with their specific bullet. Left click will shoot bullets made for the Visitors, right click will shoot bullets made for the Glimmers. If you match it up right you will gain points, if you don't you will lose points.
-    You can discern between the two manifestations by the presence of a glimmer, or the differences in the behaviors. Glimmers will have an aura around them that will fade with each new Dream Cycle, eventually they won't exist at all. Because of this its important to learn the differences in behaviors. Visitors are more quick to react, turn faster and move faster while Glimmers are more smooth graceful.
-    At the end of each Dream Cycle you can purchese upgrades to help you out later on. Remember that your points carry over into the next cycle so you could lose them if you don't spend them. Your final score is based off of how many points you have at the end of the final cycle.
-    To get used to these different behaviors, you can try out the freeplay mode.
+
+    There are two different kinds of manifestations: The Visitors are external manifestations in your dreams, and the Glimmers are manifestations of the dream itself. As the observer in your dream, you need to figure out what is a Visitor and what is a Glimmer.
+
+    Your goal is to discern between these two manifestations by throwing Observances at them. Observances dispatch the power the manifestations have. Left click will throw an Observance made for the Visitors, right click will throw an Observance made for the Glimmers. If you match it up right you will gain points, if you don't you will lose points.
+
+    You can discern between the two manifestations by the presence of an aura on a Glimmer, but the aura will fade as you move deeper into the Dream Cycles eventually disappearing altogether. The two manifestations also move differently. The Visitors move faster and are more responsive to the player. The Glimmers move slower and more gracefully.
+
+    At the end of each Dream Cycle you can use the points to bolster yourself. Remember that your points carry over into the next cycle so you could lose them if you don't spend them. Your final score is based off of how many points you have at the end of the final cycle.
+
+    To get used to these different behaviors, you can try out the free play mode.
 ]]
 
 function Instructions:createGui()
     local title = TextEntity("Instructions")
     title:setFont("BPreplayBold.otf",60)
     title:setColor({50,50,50})
-    title:middleX(Rect.fromScreen():middleX())
-    title.y = 40
+    title:bottom(Rect.fromScreen():bottom()-20)
+    title.x = 50
 
     local back = TextEntity("Back")
     back:setFont("BPreplayBold.otf",30)
-    back:setColor({0,0,0})
-    back:right(Rect.fromScreen():right()-25)
-    back:bottom(Rect.fromScreen():bottom()-10)
+    back:setColor({32, 100, 22})
+    back:right(Rect.fromScreen():right()-title.x)
+    back:bottom(title:bottom()-7)
     back.onClick = function()
         self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
                 statements.switchState(require("mainmenu")())
@@ -54,11 +59,11 @@ function Instructions:createGui()
 
 
     local instructions = TextEntity(instructions)
-    instructions:setFont("BPreplayBold.otf",16)
+    instructions:setFont("BPreplay.otf",16)
     instructions:setColor({0,0,0})
-    instructions.x = 100
-    instructions.y = title:bottom()+20
-    instructions.width = love.graphics.getWidth()-200
+    instructions.x = 75
+    instructions.y = 30
+    instructions.width = love.graphics.getWidth()-150
     instructions.align = "left"
     instructions.printf = true
 

@@ -24,7 +24,7 @@ function FreePlay:new(debug)
 
     local helptext = TextEntity(_helptext)
     helptext:setFont("BPreplayBold.otf",20)
-    helptext:setColor({50,50,50})
+    helptext:setColor({0,0,0})
     helptext.width = love.graphics.getWidth()*0.75
     helptext:middleX(Rect.fromScreen():middleX())
     helptext:middleY(Rect.fromScreen():middleY())
@@ -66,7 +66,7 @@ function FreePlay:die()
     local report = {
         leveltime = self.timer
     }
-    require("statreporter").report("levelend",report,true)
+    require("statreporter").report("freeplay",report,true)
 end
 
 return FreePlay

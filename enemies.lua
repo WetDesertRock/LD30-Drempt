@@ -4,9 +4,9 @@ local DreamEnemy = Enemy:extend()
 function DreamEnemy:new(x,y)
     DreamEnemy.super.new(self,x,y)
     self.turnrate = 2
-    self.speed = 55
+    self.speed = 50
     self.pointval = -10
-    self.behaviors = {{self.avoidOthers,4},{self.seekPlayer,5}}
+    self.behaviors = {{self.avoidOthers,5},{self.seekPlayer,5}}
 end
 
 local RealEnemy = Enemy:extend()

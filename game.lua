@@ -18,7 +18,7 @@ local TextEntity = require("textentity")
 
 local Game = Object:extend()
 local WaveTexts = {
-    "This is the first Dream Cycle of five. Shoot a dream bullet at the Manifestations with a white aura surrounding them.\nAuras will fade with each progressive Dream Cycle, so learn the behavioral differences between the two Manifestations!",
+    "This is the first Dream Cycle of five. Throw an Observance at the Manifestations with a white aura surrounding them.\nAuras will fade with each progressive Dream Cycle, so learn the behavioral differences between the two Manifestations!",
     "The auras are starting to fade, you should keep learning the differences between the different manifestations.",
     "",
     "",
@@ -61,7 +61,7 @@ function Game:new(debug,skiptext)
     if WaveTexts[self.wave] ~= "" and not skiptext then
         local helptext = TextEntity(WaveTexts[self.wave])
         helptext:setFont("BPreplayBold.otf",20)
-        helptext:setColor({50,50,50})
+        helptext:setColor({0,0,0})
         helptext.width = love.graphics.getWidth()*0.75
         helptext:middleX(Rect.fromScreen():middleX())
         helptext:middleY(Rect.fromScreen():middleY())

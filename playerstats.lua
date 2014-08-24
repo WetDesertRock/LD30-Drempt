@@ -11,7 +11,7 @@ local stats = {
     c_turnrate = 10,
 
     shotrate = 0,
-    n_shotrate = "Fire Speed",
+    n_shotrate = "Throw Rate",
     c_shotrate = 10,
 
     hp = 0,

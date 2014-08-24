@@ -97,7 +97,7 @@ function MainMenu:createGui()
 
     local sndhint = TextEntity("Press m to toggle music, press n to toggle sound effects.")
     sndhint:setFont("BPreplayBold.otf",16)
-    sndhint:setColor({50,50,50})
+    sndhint:setColor({50,50,50,180})
     sndhint:bottom(Rect.fromScreen():bottom()-5)
     sndhint:right(Rect.fromScreen():right()-5)
 

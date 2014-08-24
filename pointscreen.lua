@@ -24,39 +24,39 @@ end
 
 function PointMenu:createGui()
     local title = TextEntity("Total Score")
-    title:setFont("BPreplayBold.otf",70)
+    title:setFont("BPreplayBold.otf",60)
     title:setColor({50,50,50})
-    title:middleX(Rect.fromScreen():middleX())
-    title.y = 100
-
-    local points = TextEntity("Points: "..stats.points)
-    points:setFont("BPreplayBold.otf",30)
-    points:setColor({0,0,0})
-    points:middleX(title:middleX())
-    points.y = title:bottom()+100
+    title:bottom(Rect.fromScreen():bottom()-20)
+    title.x = 50
 
     local upcount = 0
     for _,key in pairs({"hp","movespeed","turnrate","shotrate"}) do
         upcount = upcount + stats[key]
     end
 
-    local upgrades = TextEntity("Upgrades: "..upcount.."x5")
-    upgrades:setFont("BPreplayBold.otf",30)
-    upgrades:setColor({0,0,0})
-    upgrades.x = points.x
-    upgrades.y = points:bottom()+10
-
     local total = TextEntity("Total: "..upcount*5 + stats.points)
     total:setFont("BPreplayBold.otf",30)
     total:setColor({0,0,0})
-    total.x = points.x
-    total.y = upgrades:bottom()+20
+    total.x = title.x
+    total:bottom(title:top()-60)
+
+    local upgrades = TextEntity("Upgrades: "..upcount.."x5")
+    upgrades:setFont("BPreplayBold.otf",30)
+    upgrades:setColor({0,0,0})
+    upgrades.x = title.x
+    upgrades:bottom(total:top()-20)
+
+    local points = TextEntity("Points: "..stats.points)
+    points:setFont("BPreplayBold.otf",30)
+    points:setColor({0,0,0})
+    points.x = title.x
+    points:bottom(upgrades:top()-20)
 
     local menu = TextEntity("Main Menu")
-    menu:setFont("BPreplayBold.otf",40)
-    menu:setColor({0,0,0})
-    menu:middleX(title:middleX())
-    menu.y = Rect.fromScreen():bottom()-70
+    menu:setFont("BPreplayBold.otf",30)
+    menu:setColor({32, 100, 22})
+    menu:right(Rect.fromScreen():right()-title.x)
+    menu:bottom(title:bottom()-7)
     menu.nohover = false
     menu.onClick = function()
         self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
