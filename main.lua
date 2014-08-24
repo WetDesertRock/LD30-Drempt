@@ -14,7 +14,6 @@ function GlobalState:init()
     self.music = Media:playSound("music.ogg")
     self.music:setVolume(0)
     self.music:setLooping(true)
-    self.music:pause()
     self.musicvol = 0
     flux.to(self,4,{musicvol=1})
 end
@@ -34,6 +33,21 @@ function GlobalState:errhand(msg)
     }
     statreporter.report("error",report,false)
     loveerr(msg)
+end
+
+function GlobalState:keypressed(key,isdown)
+    if key == "m" then
+        local g = 0
+        if self.musicvol == 0 then g = 1 end
+        flux.to(self,1,{musicvol=g})
+    end
+    if key == "n" then
+        if Media.defaultvolume == 0 then
+            Media.defaultvolume = 1
+        else
+            Media.defaultvolume = 0
+        end
+    end
 end
 
 
@@ -58,14 +72,4 @@ function love.load()
     statements.switchState(require('mainmenu')())
 
     love.audio.setDistanceModel("linear clamped")
-end
-
-function love.keypressed(key,isrepeat)
-end
-
-function love.keypressed(k)
-end
-
-
-function love.keyreleased(k)
 end

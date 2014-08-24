@@ -74,12 +74,20 @@ function MainMenu:createGui()
         love.event.quit()
     end
     quit.nohover = false
+
+    local sndhint = TextEntity("Press m to toggle music, press n to toggle sound effects.")
+    sndhint:setFont("BPreplayBold.otf",16)
+    sndhint:setColor({50,50,50})
+    sndhint:bottom(Rect.fromScreen():bottom()-5)
+    sndhint:right(Rect.fromScreen():right()-5)
+
     self.gui:add(quit)
     self.gui:add(play)
     self.gui:add(a1)
     self.gui:add(a2)
     self.gui:add(a3)
     self.gui:add(title)
+    self.gui:add(sndhint)
 end
 
 function MainMenu:mousepressed(x,y,button)

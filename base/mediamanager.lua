@@ -6,6 +6,7 @@ local MediaManager = Object:extend()
 
 function MediaManager:new()
     self:purge()
+    self.defaultvolume = 1
 end
 
 function MediaManager:getImage(path)
@@ -35,6 +36,7 @@ end
 
 function MediaManager:playSound(path,volume,pitch)
     local snd = self:getSound(path)
+    snd:setVolume(self.defaultvolume)
     if volume ~= nil then
         snd:setVolume(volume)
     end

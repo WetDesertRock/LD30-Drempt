@@ -41,6 +41,7 @@ function Game:new(debug)
     self.player.speed = self.player.speed+(stats.movespeed*10)
     self.player.shotrate = self.player.shotrate+(stats.shotrate/4)
     self.player.hp = self.player.hp+(stats.hp*10)
+    self.player.hp_max = self.player.hp
 
     self.camera:focus(self.player)
     self.entities:add(self.player)

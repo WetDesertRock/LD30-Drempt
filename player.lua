@@ -15,7 +15,7 @@ function Player:new(x,y)
     self:setImage("player.png",40)
     self.speed = 120
     self.shotrate = 0.5
-    self.hp = 10--00
+    self.hp = 100--00
     self.turnrate = 6
     self.projsize = 25
     self.snd_onkill = "playerdie.ogg"

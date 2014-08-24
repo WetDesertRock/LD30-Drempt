@@ -1,6 +1,8 @@
 local Group = require("base.group")
+local Rect = require("base.rect")
 
 local TextEntity = require("textentity")
+local HealthBar = require("healthbar")
 
 local gui = Group:extend()
 
@@ -18,6 +20,12 @@ function gui:update(dt)
         points:setColor({0,0,0})
         self:add(points)
         self.isinit = true
+
+        local bar = HealthBar(G.player,"hp")
+        bar.width,bar.height = 300,20
+        bar:bottom(Rect.fromScreen():bottom()-5)
+        bar:right(Rect.fromScreen():right()-5)
+        self:add(bar)
     end
 end
 
