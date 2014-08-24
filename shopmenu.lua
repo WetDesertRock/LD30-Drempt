@@ -34,16 +34,14 @@ function ShopMenu:createGui()
     points:bottom(title:bottom())
 
 
-    local play = TextEntity("Next Wave")
+    local play = TextEntity("Next Dream Cycle")
     play:setFont("BPreplayBold.otf",30)
     play:setColor({32, 100, 22})
     play:right(Rect.fromScreen():right()-25)
-    play:bottom(title:bottom())
-    play:bottom(title:bottom())
+    play:bottom(Rect.fromScreen():bottom()-10)
     play.onClick = function()
         self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
-                G = Game()
-                statements.switchState(G)
+                statements.switchState(require("game")())
             end)
     end
     play.nohover = false

@@ -58,18 +58,38 @@ function MainMenu:createGui()
     play.x,play.y = title.x,title:bottom()+100
     play.onClick = function()
         self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
-                G = Game()
-                statements.switchState(G)
+                statements.switchState(require("game")())
             end)
     end
     play.nohover = false
 
+    local freeplay = TextEntity("Free Play")
+    freeplay:setFont("BPreplayBold.otf",40)
+    freeplay:setColor({0,0,0})
+    freeplay:right(title:right())
+    freeplay.y = play.y
+    freeplay.onClick = function()
+        self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
+                statements.switchState(require("freeplay")())
+            end)
+    end
+    freeplay.nohover = false
+
+    local instructions = TextEntity("Instructions")
+    instructions:setFont("BPreplayBold.otf",40)
+    instructions:setColor({0,0,0})
+    instructions.y = play:bottom()+10
+    instructions:middleX(title:middleX())
+    instructions.onClick = function()
+        statements.switchState(require("instructions")())
+    end
+    instructions.nohover = false
 
     local quit = TextEntity("Quit")
     quit:setFont("BPreplayBold.otf",40)
     quit:setColor({0,0,0})
-    quit:right(title:right())
-    quit.y = play.y
+    quit:middleX(title:middleX())
+    quit.y = instructions:bottom()+10
     quit.onClick = function()
         love.event.quit()
     end
@@ -88,6 +108,8 @@ function MainMenu:createGui()
     self.gui:add(a3)
     self.gui:add(title)
     self.gui:add(sndhint)
+    self.gui:add(instructions)
+    self.gui:add(freeplay)
 end
 
 function MainMenu:mousepressed(x,y,button)

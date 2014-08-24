@@ -18,9 +18,9 @@ function HealthBar:update(dt)
 end
 
 function HealthBar:draw()
-    love.graphics.setColor(49, 64, 146)
+    love.graphics.setColor(117, 127, 169)
     love.graphics.rectangle("fill",self.x,self.y,self.width*self.dispamt,self.height)
-    love.graphics.setColor(0,0,0)
+    love.graphics.setColor(0,0,0, 150)
     love.graphics.rectangle("line",self.x,self.y,self.width,self.height)
 end
 return HealthBar

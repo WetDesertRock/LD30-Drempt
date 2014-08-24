@@ -18,15 +18,16 @@ local TextEntity = require("textentity")
 
 local Game = Object:extend()
 local WaveTexts = {
-    "This is the first wave of 5. Shoot a dream bullet at enemies with a white aura surrounding them.",
-    "The auras are starting to fade, you should start learning the differences between the different enemies.",
+    "This is the first Dream Cycle of five. Shoot a dream bullet at the Manifestations with a white aura surrounding them.\nAuras will fade with each progressive Dream Cycle, so learn the behavioral differences between the two Manifestations!",
+    "The auras are starting to fade, you should keep learning the differences between the different manifestations.",
     "",
     "",
-    "This is the last wave, make it count!"
+    "This is the last Dream Cycle, make it count!"
 }
-local WaveAlphas = {70,50,40,20,0}
-local SpawnRates = {1.5,1.2,0.9,0.8,0.8}
-function Game:new(debug)
+local WaveAlphas = {100,70,40,20,0}
+-- local SpawnRates = {1.5,1.2,0.9,0.8,0.8}
+local SpawnRates = {1.6,1.6,1.6,1.6,1.6,1.6}
+function Game:new(debug,skiptext)
     self.debug = debug
     self.entities = Group()
     self.gui = Gui()
@@ -57,7 +58,7 @@ function Game:new(debug)
 
     self.fadeamt = 0
 
-    if WaveTexts[self.wave] ~= "" then
+    if WaveTexts[self.wave] ~= "" and not skiptext then
         local helptext = TextEntity(WaveTexts[self.wave])
         helptext:setFont("BPreplayBold.otf",20)
         helptext:setColor({50,50,50})
@@ -65,7 +66,7 @@ function Game:new(debug)
         helptext:middleX(Rect.fromScreen():middleX())
         helptext:middleY(Rect.fromScreen():middleY())
         helptext.printf = true
-        helptext:setLifespan(8,true)
+        helptext:setLifespan(15,true)
         self.gui:add(helptext)
     end
 
@@ -81,6 +82,15 @@ function Game:new(debug)
             until nil
         end
         )
+end
+
+function Game:enter()
+    love.mouse.setGrabbed(true)
+    G = self
+end
+function Game:leave()
+    love.mouse.setGrabbed(false)
+    -- G = nil
 end
 
 function Game:spawnEnemy()
@@ -117,7 +127,7 @@ end
 function Game:die()
     self.tweens:to(self,4,{fadeamt=255}):ease("quadin"):oncomplete(function()
             if self.wave == 5 then
-                statements.switchState(require("mainmenu")())
+                statements.switchState(require("pointscreen")())
             else
                 statements.switchState(require("shopmenu")())
             end

@@ -3,7 +3,7 @@ local statements = require("lib.statements")
 local flux = require("lib.flux")
 local Media = require('base.mediamanager')
 
-DEBUG = false
+DEBUG = true
 REPORTSTATS = true
 
 local statreporter = require("statreporter")
@@ -47,6 +47,9 @@ function GlobalState:keypressed(key,isdown)
         else
             Media.defaultvolume = 0
         end
+    end
+    if key == "s" and DEBUG and G then
+        G:die()
     end
 end
 

@@ -15,6 +15,7 @@ function TextEntity:new(prefix,target,key)
     self.nohover = true
     self.collidable = false
     self.printf = false
+    self.align = "center"
 end
 function TextEntity:setFont(fp,s)
     self.font = Media:getFont(fp,s)
@@ -43,7 +44,7 @@ function TextEntity:draw()
     end
 
     if self.printf then
-        love.graphics.printf(t,self.x+self.offx,self.y+self.offy,self.width,"center")
+        love.graphics.printf(t,self.x+self.offx,self.y+self.offy,self.width,self.align)
     else
         love.graphics.print(t,self.x+self.offx,self.y+self.offy)
     end

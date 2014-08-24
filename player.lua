@@ -15,11 +15,12 @@ function Player:new(x,y)
     self:setImage("player.png",40)
     self.speed = 120
     self.shotrate = 0.5
-    self.hp = 100--00
+    self.hp = 10--00
     self.turnrate = 6
     self.projsize = 25
     self.snd_onkill = "playerdie.ogg"
     self.snd_onhit = "playerhit.ogg"
+    self.freeplay = false
 end
 
 function Player:update(dt)
@@ -66,8 +67,23 @@ function Player:arrowKeyControl()
 end
 
 function Player:onKill(...)
-    Player.super.onKill(self,...)
-    G:die()
+    if self.freeplay then
+        self.hp = self.hp_max
+        self.dead = false
+    else
+        Player.super.onKill(self,...)
+        G:die()
+    end
+end
+
+function Player:draw()
+    if self.freeplay then
+        love.graphics.setColor(0,0,0)
+        love.graphics.setLineWidth(2)
+        local mx,my = G.camera:getMousePosition()
+        love.graphics.line(self:middleX(),self:middleY(),mx,my)
+    end
+    Player.super.draw(self)
 end
 
 

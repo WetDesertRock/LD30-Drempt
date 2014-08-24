@@ -57,7 +57,7 @@ function PointMenu:createGui()
     menu:setColor({0,0,0})
     menu:middleX(title:middleX())
     menu.y = Rect.fromScreen():bottom()-70
-    menus.nohover = false
+    menu.nohover = false
     menu.onClick = function()
         self.tweens:to(self,1,{fadeamt=255}):ease("quadin"):oncomplete(function()
                 statements.switchState(require("mainmenu")())
