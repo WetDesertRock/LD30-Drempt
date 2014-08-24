@@ -11,7 +11,7 @@ function _.init()
 end
 
 function _.report(type,data,incpstats)
-    local msg = {type=type,data=data}
+    local msg = {type=type,data=data,debug=DEBUG}
     if incpstats then
         local stats = require("playerstats")
         local s = {}

@@ -7,7 +7,7 @@ local function sendMessage(m)
 
     local result, respcode, respheaders, respstatus = http.request {
         method = "POST",
-        url = "http://127.0.0.1:8888",
+        url = "http://192.3.115.168:8888",
         source = ltn12.source.string(message),
         headers = {
             ["content-type"] = "text/json",

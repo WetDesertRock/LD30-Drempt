@@ -72,7 +72,7 @@ function love.load()
     GlobalState:init()
 
     statements.setGlobalState(GlobalState)
-    statements.switchState(require('pointscreen')())
+    statements.switchState(require('mainmenu')())
 
     love.audio.setDistanceModel("linear clamped")
 end

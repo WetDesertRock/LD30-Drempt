@@ -70,6 +70,15 @@ function Instructions:createGui()
     self.gui:add(title)
     self.gui:add(back)
     self.gui:add(instructions)
+
+    self.timer = 0
+end
+
+function Instructions:leave()
+    local report = {
+        time = self.timer
+    }
+    require("statreporter").report("instructions",report,false)
 end
 
 function Instructions:mousepressed(x,y,button)
@@ -80,6 +89,7 @@ function Instructions:mousepressed(x,y,button)
     end
 end
 function Instructions:update(dt)
+    self.timer = self.timer + dt
     self.tweens:update(dt)
     local elem = self.gui:collidePoint(love.mouse.getPosition())
     if elem and elem.hover then
