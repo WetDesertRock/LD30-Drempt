@@ -25,7 +25,7 @@ function Instructions:new(debug)
 end
 
 local instructions = [[
-    Drempt is a game about when the external world connects with your dream world that takes place throughout five dream cycles.
+    Drempt is a game about when the external world connects with your dream world that takes place throughout five dream cycles. Each dream cycle ends when you fall prey to the manifestations.
 
     There are two different kinds of manifestations: The Visitors are external manifestations in your dreams, and the Glimmers are manifestations of the dream itself. As the observer in your dream, you need to figure out what is a Visitor and what is a Glimmer.
 

@@ -19,7 +19,7 @@ function MainMenu:new(debug)
     self:createGui()
     self.fadeamt = 0
     self.tweens = flux.group()
-    for _,key in pairs({"hp","movespeed","turnrate","shotrate","points"}) do
+    for _,key in pairs({"hp","movespeed","turnrate","shotrate","points","wave"}) do
         stats[key] = 0
     end
 end

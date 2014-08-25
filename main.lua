@@ -3,7 +3,7 @@ local statements = require("lib.statements")
 local flux = require("lib.flux")
 local Media = require('base.mediamanager')
 
-DEBUG = true
+DEBUG = false
 REPORTSTATS = true
 
 local statreporter = require("statreporter")
@@ -64,6 +64,7 @@ function love.load()
 
     resw,resh = love.window.getDesktopDimensions( display )
     local report = {
+        version = 1.0,
         res = {resw,resh},
         os = love.system.getOS( ),
         potatosalad = true,
