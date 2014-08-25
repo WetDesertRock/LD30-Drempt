@@ -3,7 +3,7 @@ local statements = require("lib.statements")
 local Rect = require("base.rect")
 
 local TextEntity = require("textentity")
-local Game = require("Game")
+local Game = require("game")
 local stats = require("playerstats")
 local Enemy = require("enemy")
 local Projectile = require("projectile")

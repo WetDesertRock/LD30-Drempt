@@ -40,7 +40,7 @@ function Game:new(debug,skiptext)
     self.player = Player(1000,1000)
     self.player.turnrate = self.player.turnrate+(stats.turnrate/2)
     self.player.speed = self.player.speed+(stats.movespeed*10)
-    self.player.shotrate = self.player.shotrate+(stats.shotrate/4)
+    self.player.shotrate = self.player.shotrate-(stats.shotrate/4)
     self.player.hp = self.player.hp+(stats.hp*10)
     self.player.hp_max = self.player.hp
 
